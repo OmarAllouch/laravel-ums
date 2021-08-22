@@ -1,5 +1,6 @@
 <?php
 
+use Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
+});
+
+// Admin Routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('/users', UserController::class);
 });
