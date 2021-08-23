@@ -2,6 +2,7 @@
 
 use Admin\UserController;
 use Illuminate\Support\Facades\Route;
+use User\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,12 @@ Route::get('/', function () {
     return view('index');
 });
 
+// User related pages
+Route::prefix('user')->middleware(['auth', 'verified'])->name('user.')->group(function () {
+    Route::get('profile', Profile::class)->name('profile');
+});
+
 // Admin Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'auth.isAdmin', 'verified'])->name('admin.')->group(function () {
     Route::resource('/users', UserController::class);
 });
